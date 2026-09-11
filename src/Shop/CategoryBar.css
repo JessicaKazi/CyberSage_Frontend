@@ -1,0 +1,39 @@
+.category-bar {
+  max-width: 1400px;
+
+  margin: 0 auto;
+
+  padding: 20px 30px;
+
+  display: flex;
+
+  gap: 25px;
+
+  overflow-x: auto;
+
+  border-bottom: 1px solid #eee;
+}
+
+.category {
+  background: none;
+
+  border: none;
+
+  white-space: nowrap;
+
+  color: #777;
+
+  cursor: pointer;
+
+  font-size: 14px;
+}
+
+.category:hover {
+  color: #111;
+}
+
+.category.active {
+  color: #111;
+
+  font-weight: 600;
+}

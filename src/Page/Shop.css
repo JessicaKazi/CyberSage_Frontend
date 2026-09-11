@@ -1,0 +1,877 @@
+/* =====================================================
+   CYBERSAGE SHOP
+===================================================== */
+
+.shop-page {
+    width: 100%;
+    min-height: 100vh;
+    background: #f4f4f2;
+    color: #111;
+    overflow-x: hidden;
+}
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.shop-hero {
+    min-height: 650px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: #080808;
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.shop-hero-content {
+    padding: 130px 7vw 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+}
+
+.shop-eyebrow {
+    font-size: 10px;
+    letter-spacing: 3px;
+    font-weight: 700;
+    color: #888;
+    margin: 0 0 25px;
+}
+
+.shop-hero h1 {
+    margin: 0;
+    font-size: clamp(60px, 7vw, 105px);
+    line-height: 0.85;
+    letter-spacing: -7px;
+    font-weight: 800;
+}
+
+.shop-hero h1 span {
+    color: #a30e25;
+}
+
+.shop-hero-description {
+    max-width: 440px;
+    margin: 35px 0 0;
+    color: #999;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.shop-hero-meta {
+    display: flex;
+    gap: 25px;
+    margin-top: 45px;
+    padding-top: 20px;
+    border-top: 1px solid #292929;
+    max-width: 500px;
+}
+
+.shop-hero-meta span {
+    font-size: 8px;
+    letter-spacing: 1.5px;
+    color: #777;
+}
+
+
+/* =====================================================
+   HERO VISUAL
+===================================================== */
+
+.shop-hero-visual {
+    position: relative;
+    min-height: 650px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.hero-glow {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: #a30e25;
+    opacity: 0.12;
+    filter: blur(100px);
+    animation: heroGlow 5s ease-in-out infinite alternate;
+}
+
+.hero-product-shape {
+    width: 350px;
+    height: 350px;
+    border-radius: 30px;
+    background:
+        linear-gradient(
+            135deg,
+            #343434,
+            #111 50%,
+            #252525
+        );
+    transform:
+        rotate(-12deg)
+        perspective(500px)
+        rotateY(-12deg);
+    box-shadow:
+        30px 40px 80px rgba(0, 0, 0, 0.8),
+        inset 2px 2px 5px rgba(255,255,255,0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: productFloat 5s ease-in-out infinite;
+}
+
+.hero-product-shape::before {
+    content: "";
+    position: absolute;
+    width: 240px;
+    height: 240px;
+    border: 1px solid #555;
+    border-radius: 20px;
+}
+
+.hero-product-shape::after {
+    content: "";
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 10px solid #222;
+    box-shadow:
+        inset 0 0 20px #000,
+        0 0 20px rgba(163, 14, 37, 0.4);
+}
+
+.hero-product-shape span {
+    font-size: 22px;
+    letter-spacing: 8px;
+    font-weight: 900;
+    color: #aaa;
+    z-index: 2;
+}
+
+.hero-visual-label {
+    position: absolute;
+    bottom: 50px;
+    right: 7vw;
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: #555;
+}
+
+
+/* =====================================================
+   STORE INTRO
+===================================================== */
+
+.store-intro {
+    max-width: 1250px;
+    margin: auto;
+    padding: 120px 30px 100px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+}
+
+.section-number {
+    color: #999;
+    font-size: 10px;
+    letter-spacing: 2px;
+    margin-bottom: 25px;
+}
+
+.store-intro h2 {
+    margin: 0;
+    font-size: clamp(45px, 5vw, 72px);
+    line-height: 0.95;
+    letter-spacing: -4px;
+    font-weight: 600;
+}
+
+.store-intro-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.store-intro-right > p {
+    max-width: 450px;
+    color: #777;
+    font-size: 14px;
+    line-height: 1.8;
+    margin-bottom: 50px;
+}
+
+.store-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 1px solid #ccc;
+    padding-top: 25px;
+}
+
+.store-stats div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.store-stats strong {
+    font-size: 26px;
+    font-weight: 600;
+}
+
+.store-stats span {
+    font-size: 8px;
+    letter-spacing: 1.5px;
+    color: #888;
+}
+
+
+/* =====================================================
+   TOOLBAR
+===================================================== */
+
+.shop-toolbar {
+    max-width: 1250px;
+    margin: auto;
+    padding: 30px;
+    border-top: 1px solid #d6d6d4;
+    border-bottom: 1px solid #d6d6d4;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+
+.toolbar-left {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.toolbar-left > p {
+    margin: 0;
+    white-space: nowrap;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #777;
+}
+
+.toolbar-right {
+    display: flex;
+    gap: 10px;
+}
+
+.search-box {
+    height: 42px;
+    min-width: 230px;
+    border: 1px solid #ccc;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+}
+
+.search-box span {
+    color: #888;
+    font-size: 20px;
+    margin-right: 8px;
+}
+
+.search-box input {
+    width: 100%;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 11px;
+    color: #111;
+}
+
+.search-box button {
+    border: none;
+    background: transparent;
+    font-size: 18px;
+    cursor: pointer;
+    color: #777;
+}
+
+.toolbar-right select {
+    height: 42px;
+    border: 1px solid #ccc;
+    background: white;
+    padding: 0 15px;
+    font-size: 9px;
+    letter-spacing: 1px;
+    color: #333;
+    outline: none;
+}
+
+
+/* =====================================================
+   PRODUCTS SECTION
+===================================================== */
+
+.products-section {
+    max-width: 1250px;
+    margin: auto;
+    padding: 90px 30px 130px;
+}
+
+.products-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 45px;
+}
+
+.products-heading span {
+    font-size: 9px;
+    letter-spacing: 2px;
+    color: #999;
+}
+
+.products-heading h2 {
+    margin: 10px 0 0;
+    font-size: clamp(35px, 4vw, 55px);
+    line-height: 1;
+    letter-spacing: -3px;
+    font-weight: 500;
+}
+
+.products-heading > p {
+    margin: 0;
+    color: #888;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+
+/* =====================================================
+   PRODUCT GRID
+===================================================== */
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+}
+
+
+/* =====================================================
+   PRODUCT ANIMATION WRAPPER
+===================================================== */
+
+.product-reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition:
+        opacity 0.7s ease,
+        transform 0.7s ease;
+    transition-delay: var(--delay);
+    min-width: 0;
+}
+
+.product-reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/*
+   Because the product wrapper itself is animated,
+   ProductCard stays responsible for the actual card.
+*/
+
+.product-reveal:hover {
+    z-index: 3;
+}
+
+
+/* =====================================================
+   PRODUCT CARD OVERRIDES
+===================================================== */
+
+/*
+   These selectors help your existing ProductCard
+   fit into the new design.
+*/
+
+.product-grid > div {
+    min-width: 0;
+}
+
+.product-grid img {
+    transition:
+        transform 0.6s cubic-bezier(.2,.8,.2,1),
+        filter 0.6s ease;
+}
+
+.product-grid > div:hover img {
+    transform: scale(1.045);
+}
+
+
+/* =====================================================
+   NO PRODUCTS
+===================================================== */
+
+.no-products {
+    min-height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+.no-products-icon {
+    font-size: 50px;
+    color: #a30e25;
+    margin-bottom: 20px;
+}
+
+.no-products h2 {
+    margin: 0 0 10px;
+    font-size: 25px;
+}
+
+.no-products p {
+    color: #888;
+    font-size: 13px;
+}
+
+.no-products button {
+    margin-top: 15px;
+    padding: 12px 25px;
+    border: 1px solid #111;
+    background: #111;
+    color: white;
+    cursor: pointer;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    transition: all 0.3s ease;
+}
+
+.no-products button:hover {
+    background: #a30e25;
+    border-color: #a30e25;
+}
+
+
+/* =====================================================
+   BANNER
+===================================================== */
+
+.shop-banner {
+    max-width: 1250px;
+    min-height: 400px;
+    margin: 0 auto 120px;
+    background: #090909;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.banner-content {
+    padding: 70px;
+    position: relative;
+    z-index: 2;
+}
+
+.banner-content p {
+    margin: 0 0 20px;
+    color: #777;
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+
+.banner-content h2 {
+    margin: 0;
+    font-size: clamp(45px, 6vw, 75px);
+    line-height: 0.9;
+    letter-spacing: -4px;
+}
+
+.banner-content button {
+    margin-top: 35px;
+    padding: 13px 25px;
+    border: 1px solid #555;
+    background: transparent;
+    color: white;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.banner-content button:hover {
+    background: #a30e25;
+    border-color: #a30e25;
+    transform: translateX(5px);
+}
+
+.banner-decoration {
+    position: absolute;
+    right: -80px;
+    bottom: -120px;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    border: 1px solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.banner-decoration::before {
+    content: "";
+    position: absolute;
+    width: 350px;
+    height: 350px;
+    border-radius: 50%;
+    border: 1px solid #333;
+}
+
+.banner-decoration::after {
+    content: "";
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: #a30e25;
+    opacity: 0.1;
+    filter: blur(40px);
+}
+
+.banner-decoration span {
+    font-size: 80px;
+    font-weight: 900;
+    letter-spacing: 10px;
+    color: #222;
+}
+
+
+/* =====================================================
+   FLOATING CART
+===================================================== */
+
+.floating-cart {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+    z-index: 999;
+    height: 55px;
+    padding: 0 8px 0 20px;
+    border: none;
+    border-radius: 30px;
+    background: #a30e25;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease;
+}
+
+.floating-cart:hover {
+    transform: translateY(-5px);
+    background: #7d0b1d;
+}
+
+.floating-cart span {
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+.floating-cart strong {
+    width: 35px;
+    height: 35px;
+    background: white;
+    color: #a30e25;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+}
+
+
+/* =====================================================
+   LOADING
+===================================================== */
+
+.shop-loading {
+    min-height: 100vh;
+    background: #080808;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.shop-loading p {
+    margin: 0;
+    color: #777;
+    font-size: 11px;
+    letter-spacing: 2px;
+}
+
+.loading-spinner {
+    width: 35px;
+    height: 35px;
+    border: 2px solid #333;
+    border-top-color: #a30e25;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+
+/* =====================================================
+   GENERAL SCROLL REVEAL
+===================================================== */
+
+.shop-reveal {
+    opacity: 0;
+    transform: translateY(50px);
+    transition:
+        opacity 0.9s ease,
+        transform 0.9s cubic-bezier(.2,.8,.2,1);
+}
+
+.shop-reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/* =====================================================
+   ANIMATIONS
+===================================================== */
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes heroGlow {
+    from {
+        transform: scale(0.9);
+        opacity: 0.08;
+    }
+
+    to {
+        transform: scale(1.15);
+        opacity: 0.18;
+    }
+}
+
+@keyframes productFloat {
+    0%,
+    100% {
+        transform:
+            translateY(0)
+            rotate(-12deg)
+            perspective(500px)
+            rotateY(-12deg);
+    }
+
+    50% {
+        transform:
+            translateY(-18px)
+            rotate(-9deg)
+            perspective(500px)
+            rotateY(-8deg);
+    }
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 1100px) {
+
+    .shop-hero {
+        grid-template-columns: 1fr;
+    }
+
+    .shop-hero-content {
+        padding-top: 100px;
+        padding-bottom: 70px;
+    }
+
+    .shop-hero-visual {
+        min-height: 450px;
+    }
+
+    .store-intro {
+        gap: 50px;
+    }
+
+    .shop-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .toolbar-left {
+        justify-content: space-between;
+    }
+
+    .toolbar-right {
+        width: 100%;
+    }
+
+    .search-box {
+        flex: 1;
+    }
+}
+
+
+@media (max-width: 850px) {
+
+    .product-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .store-intro {
+        grid-template-columns: 1fr;
+        padding-top: 80px;
+    }
+
+    .shop-banner {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .banner-content {
+        padding: 50px;
+    }
+}
+
+
+@media (max-width: 650px) {
+
+    .shop-hero-content {
+        padding: 80px 25px 60px;
+    }
+
+    .shop-hero h1 {
+        font-size: 58px;
+        letter-spacing: -4px;
+    }
+
+    .shop-hero-description {
+        font-size: 13px;
+    }
+
+    .shop-hero-meta {
+        flex-wrap: wrap;
+        gap: 12px 20px;
+    }
+
+    .shop-hero-visual {
+        min-height: 350px;
+    }
+
+    .hero-product-shape {
+        width: 260px;
+        height: 260px;
+    }
+
+    .store-intro {
+        padding: 70px 20px;
+    }
+
+    .store-intro h2 {
+        font-size: 48px;
+    }
+
+    .store-stats {
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 15px;
+    }
+
+    .shop-toolbar {
+        padding: 25px 20px;
+    }
+
+    .toolbar-left {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .toolbar-right {
+        flex-direction: column;
+    }
+
+    .toolbar-right select {
+        width: 100%;
+    }
+
+    .products-section {
+        padding: 70px 20px 90px;
+    }
+
+    .products-heading {
+        align-items: flex-start;
+        gap: 15px;
+        flex-direction: column;
+    }
+
+    .product-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+    }
+
+    .shop-banner {
+        min-height: 350px;
+        margin-bottom: 80px;
+    }
+
+    .banner-content {
+        padding: 40px 30px;
+    }
+
+    .banner-content h2 {
+        font-size: 48px;
+    }
+
+    .banner-decoration {
+        right: -180px;
+    }
+
+    .floating-cart {
+        right: 15px;
+        bottom: 15px;
+    }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+}
