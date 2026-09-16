@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "./ProductInfo.css";
 
-const API_URL = "http://localhost:3000";
+const API_URL =
+  import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 function ProductInfo() {
   const { id } = useParams();
@@ -15,50 +16,54 @@ function ProductInfo() {
 
   const [openSection, setOpenSection] = useState("specs");
 
-useEffect(() => {
-  const fetchProduct = async () => {
-    try {
-      setLoading(true);
-      setError("");
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        setLoading(true);
+        setError("");
 
-      const response = await fetch(`${API_URL}/webproducts`);
+        const response = await fetch(`${API_URL}/webproducts`);
 
-      if (!response.ok) {
-        throw new Error("Could not load products");
+        if (!response.ok) {
+          throw new Error("Could not load products");
+        }
+
+        const data = await response.json();
+
+        const formattedProducts = data.map((item) => ({
+          ...item,
+          id: item.id || item._id,
+        }));
+
+        const selectedProduct = formattedProducts.find(
+          (item) => String(item.id) === String(id)
+        );
+
+        if (!selectedProduct) {
+          throw new Error("Product not found");
+        }
+
+        setProduct(selectedProduct);
+
+        const related = formattedProducts
+          .filter(
+            (item) =>
+              String(item.id) !== String(selectedProduct.id) &&
+              item.category === selectedProduct.category
+          )
+          .slice(0, 3);
+
+        setRelatedProducts(related);
+      } catch (err) {
+        console.error("Product error:", err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
       }
+    };
 
-      const data = await response.json();
-
-      const selectedProduct = data.find(
-        (item) => String(item.id) === String(id)
-      );
-
-      if (!selectedProduct) {
-        throw new Error("Product not found");
-      }
-
-      setProduct(selectedProduct);
-
-      const related = data
-        .filter(
-          (item) =>
-            String(item.id) !== String(selectedProduct.id) &&
-            item.category === selectedProduct.category
-        )
-        .slice(0, 3);
-
-      setRelatedProducts(related);
-
-    } catch (err) {
-      console.error("Product error:", err);
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  fetchProduct();
-}, [id]);
+    fetchProduct();
+  }, [id]);
 
   const getSpecs = () => {
     if (!product?.specs) return [];
@@ -93,7 +98,6 @@ useEffect(() => {
     return `R${number.toLocaleString("en-ZA")}`;
   };
 
-
   const addToCart = () => {
     if (!product) return;
 
@@ -102,16 +106,29 @@ useEffect(() => {
 
       const cart = savedCart ? JSON.parse(savedCart) : [];
 
-      const selectedProduct = data.find(
-        (item) => String(item.id) === String(id),
+      const existingProduct = cart.find(
+        (item) =>
+          String(item.id || item._id) ===
+          String(product.id || product._id)
       );
 
       let updatedCart;
 
       if (existingProduct) {
         updatedCart = cart.map((item) => {
-          if (String(item._id) === String(product._id)) {
-            const newQuantity = Math.min(item.quantity + 1, product.stock);
+          const itemId = item.id || item._id;
+
+          if (
+            String(itemId) ===
+            String(product.id || product._id)
+          ) {
+            const currentQuantity = Number(item.quantity || 1);
+            const stock = Number(product.stock || 0);
+
+            const newQuantity =
+              stock > 0
+                ? Math.min(currentQuantity + 1, stock)
+                : currentQuantity + 1;
 
             return {
               ...item,
@@ -126,12 +143,16 @@ useEffect(() => {
           ...cart,
           {
             ...product,
+            id: product.id || product._id,
             quantity: 1,
           },
         ];
       }
 
-      localStorage.setItem("cybersageCart", JSON.stringify(updatedCart));
+      localStorage.setItem(
+        "cybersageCart",
+        JSON.stringify(updatedCart)
+      );
 
       window.dispatchEvent(new Event("cartUpdated"));
 
@@ -142,7 +163,9 @@ useEffect(() => {
   };
 
   const toggleSection = (section) => {
-    setOpenSection((current) => (current === section ? "" : section));
+    setOpenSection((current) =>
+      current === section ? "" : section
+    );
   };
 
   if (loading) {
@@ -158,9 +181,14 @@ useEffect(() => {
     return (
       <div className="product-error">
         <h2>Product Not Found</h2>
-        <p>{error || "This product does not exist."}</p>
 
-        <button onClick={() => navigate("/shop")}>Back To Shop</button>
+        <p>
+          {error || "This product does not exist."}
+        </p>
+
+        <button onClick={() => navigate("/Shop")}>
+          Back To Shop
+        </button>
       </div>
     );
   }
@@ -169,7 +197,6 @@ useEffect(() => {
 
   return (
     <div className="product-page">
-
       <main className="product-main">
         <section className="product-image-section">
           <div className="product-image-container">
@@ -195,7 +222,8 @@ useEffect(() => {
           <div className="product-top">
             <div>
               <p className="product-eyebrow">
-                CYBERSAGE / {product.category || "COMPONENT"}
+                CYBERSAGE /{" "}
+                {product.category || "COMPONENT"}
               </p>
 
               <h1>{product.name}</h1>
@@ -208,20 +236,21 @@ useEffect(() => {
 
           <p className="product-description">
             {product.description ||
-              `Premium ${product.category || "PC component"} designed for reliable performance, stability and long-term use.`}
+              `Premium ${
+                product.category || "PC component"
+              } designed for reliable performance, stability and long-term use.`}
           </p>
 
-          {/* STOCK */}
           <div className="product-stock">
             <span
               className={
-                product.stock > 0
+                Number(product.stock) > 0
                   ? "stock-dot available"
                   : "stock-dot unavailable"
               }
             ></span>
 
-            {product.stock > 0
+            {Number(product.stock) > 0
               ? `${product.stock} units available`
               : "Out of stock"}
           </div>
@@ -229,23 +258,33 @@ useEffect(() => {
           <button
             className="product-add-button"
             onClick={addToCart}
-            disabled={!product.stock || product.stock <= 0}
+            disabled={
+              !product.stock ||
+              Number(product.stock) <= 0
+            }
           >
-            {product.stock > 0 ? "ADD TO CART" : "OUT OF STOCK"}
+            {Number(product.stock) > 0
+              ? "ADD TO CART"
+              : "OUT OF STOCK"}
 
             <span>→</span>
           </button>
 
           <div className="product-details">
-
             <div className="detail-section">
               <button
                 className="detail-header"
-                onClick={() => toggleSection("specs")}
+                onClick={() =>
+                  toggleSection("specs")
+                }
               >
                 <span>PRODUCT SPECIFICATIONS</span>
 
-                <span>{openSection === "specs" ? "−" : "+"}</span>
+                <span>
+                  {openSection === "specs"
+                    ? "−"
+                    : "+"}
+                </span>
               </button>
 
               {openSection === "specs" && (
@@ -255,15 +294,28 @@ useEffect(() => {
                       const parts = spec.split(":");
 
                       return (
-                        <div className="spec-row" key={index}>
-                          <span>{parts[0]?.trim()}</span>
+                        <div
+                          className="spec-row"
+                          key={index}
+                        >
+                          <span>
+                            {parts[0]?.trim()}
+                          </span>
 
-                          <strong>{parts.slice(1).join(":").trim()}</strong>
+                          <strong>
+                            {parts
+                              .slice(1)
+                              .join(":")
+                              .trim()}
+                          </strong>
                         </div>
                       );
                     })
                   ) : (
-                    <p>No additional specifications available.</p>
+                    <p>
+                      No additional specifications
+                      available.
+                    </p>
                   )}
                 </div>
               )}
@@ -272,16 +324,25 @@ useEffect(() => {
             <div className="detail-section">
               <button
                 className="detail-header"
-                onClick={() => toggleSection("category")}
+                onClick={() =>
+                  toggleSection("category")
+                }
               >
                 <span>CATEGORY</span>
 
-                <span>{openSection === "category" ? "−" : "+"}</span>
+                <span>
+                  {openSection === "category"
+                    ? "−"
+                    : "+"}
+                </span>
               </button>
 
               {openSection === "category" && (
                 <div className="detail-content">
-                  <p>{product.category || "PC Component"}</p>
+                  <p>
+                    {product.category ||
+                      "PC Component"}
+                  </p>
                 </div>
               )}
             </div>
@@ -289,11 +350,17 @@ useEffect(() => {
             <div className="detail-section">
               <button
                 className="detail-header"
-                onClick={() => toggleSection("tags")}
+                onClick={() =>
+                  toggleSection("tags")
+                }
               >
                 <span>PRODUCT TAGS</span>
 
-                <span>{openSection === "tags" ? "−" : "+"}</span>
+                <span>
+                  {openSection === "tags"
+                    ? "−"
+                    : "+"}
+                </span>
               </button>
 
               {openSection === "tags" && (
@@ -303,7 +370,9 @@ useEffect(() => {
                       product.tags
                         .split(",")
                         .map((tag, index) => (
-                          <span key={index}>{tag.trim()}</span>
+                          <span key={index}>
+                            {tag.trim()}
+                          </span>
                         ))
                     ) : (
                       <span>CyberSage</span>
@@ -316,17 +385,26 @@ useEffect(() => {
             <div className="detail-section">
               <button
                 className="detail-header"
-                onClick={() => toggleSection("delivery")}
+                onClick={() =>
+                  toggleSection("delivery")
+                }
               >
-                <span>PAYMENT & DELIVERY</span>
+                <span>
+                  PAYMENT & DELIVERY
+                </span>
 
-                <span>{openSection === "delivery" ? "−" : "+"}</span>
+                <span>
+                  {openSection === "delivery"
+                    ? "−"
+                    : "+"}
+                </span>
               </button>
 
               {openSection === "delivery" && (
                 <div className="detail-content">
                   <p>
-                    Secure checkout and reliable delivery across South Africa.
+                    Secure checkout and reliable
+                    delivery across South Africa.
                   </p>
                 </div>
               )}
@@ -337,11 +415,16 @@ useEffect(() => {
 
       <section className="product-feature">
         <div className="feature-image">
-          <img src={getImageUrl(product.image)} alt={product.name} />
+          <img
+            src={getImageUrl(product.image)}
+            alt={product.name}
+          />
         </div>
 
         <div className="feature-information">
-          <p className="feature-label">WHY CYBERSAGE</p>
+          <p className="feature-label">
+            WHY CYBERSAGE
+          </p>
 
           <h2>
             Built for
@@ -350,8 +433,9 @@ useEffect(() => {
           </h2>
 
           <p>
-            Every component in the CyberSage store is selected with performance,
-            stability and reliability in mind.
+            Every component in the CyberSage store
+            is selected with performance, stability
+            and reliability in mind.
           </p>
 
           <div className="feature-list">
@@ -367,7 +451,9 @@ useEffect(() => {
 
             <div>
               <strong>03</strong>
-              <span>Built for demanding workloads</span>
+              <span>
+                Built for demanding workloads
+              </span>
             </div>
           </div>
         </div>
@@ -388,11 +474,18 @@ useEffect(() => {
             {relatedProducts.map((item) => (
               <article
                 className="related-card"
-                key={item._id}
-                onClick={() => navigate(`/product/${item.id}`)}
+                key={item.id}
+                onClick={() =>
+                  navigate(
+                    `/product/${item.id}`
+                  )
+                }
               >
                 <div className="related-image">
-                  <img src={getImageUrl(item.image)} alt={item.name} />
+                  <img
+                    src={getImageUrl(item.image)}
+                    alt={item.name}
+                  />
                 </div>
 
                 <div className="related-info">
@@ -402,7 +495,9 @@ useEffect(() => {
                     <h3>{item.name}</h3>
                   </div>
 
-                  <strong>{formatPrice(item.price)}</strong>
+                  <strong>
+                    {formatPrice(item.price)}
+                  </strong>
                 </div>
               </article>
             ))}

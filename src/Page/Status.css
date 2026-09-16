@@ -1,0 +1,202 @@
+.status-page {
+  background: #000;
+  color: #fff;
+}
+
+.status-hero {
+  padding: 180px 7% 100px;
+  min-height: 600px;
+  border-bottom: 1px solid #222;
+}
+
+.status-hero h1 {
+  margin: 30px 0;
+  font-size: clamp(70px, 10vw, 130px);
+  line-height: 0.78;
+  letter-spacing: -8px;
+}
+
+.status-hero h1 span {
+  color: #a30e25;
+}
+
+.status-hero p {
+  color: #555;
+  font-family: monospace;
+  font-size: 9px;
+}
+
+.status-dashboard {
+  max-width: 1100px;
+  margin: auto;
+  padding: 120px 30px;
+}
+
+.status-overview {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 80px;
+  align-items: center;
+  padding-bottom: 80px;
+  border-bottom: 1px solid #222;
+}
+
+.status-circle {
+  width: 220px;
+  height: 220px;
+  border: 1px solid #a30e25;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 0 40px rgba(163, 14, 37, 0.12),
+    inset 0 0 30px rgba(163, 14, 37, 0.05);
+}
+
+.status-circle strong {
+  font-size: 45px;
+}
+
+.status-circle span {
+  color: #555;
+  font-size: 7px;
+  letter-spacing: 2px;
+}
+
+.status-overview h2 {
+  margin: 20px 0;
+  font-size: 35px;
+}
+
+.status-overview p {
+  max-width: 450px;
+  color: #666;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.status-list {
+  margin-top: 50px;
+}
+
+.status-row {
+  min-height: 75px;
+  display: grid;
+  grid-template-columns: 40px 180px 1fr 100px;
+  gap: 20px;
+  align-items: center;
+  border-bottom: 1px solid #222;
+}
+
+.status-row > span {
+  color: #a30e25;
+  font-family: monospace;
+  font-size: 8px;
+}
+
+.status-row strong {
+  font-size: 9px;
+  letter-spacing: 1px;
+}
+
+.status-bar {
+  height: 2px;
+  background: #222;
+}
+
+.status-bar i {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #a30e25;
+  animation: statusPulse 2s ease-in-out infinite;
+}
+
+@keyframes statusPulse {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+.status-row em {
+  color: #a30e25;
+  font-style: normal;
+  font-family: monospace;
+  font-size: 7px;
+  text-align: right;
+}
+
+.status-bottom {
+  min-height: 650px;
+  padding: 120px 20px;
+  border-top: 1px solid #222;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.status-bottom > span {
+  color: #555;
+  font-family: monospace;
+  font-size: 8px;
+  letter-spacing: 2px;
+}
+
+.status-bottom h2 {
+  margin-top: 35px;
+  font-size: clamp(60px, 9vw, 120px);
+  line-height: 0.8;
+  letter-spacing: -7px;
+}
+
+.status-bottom h2 span {
+  color: #a30e25;
+}
+
+@media (max-width: 700px) {
+  .status-hero {
+    padding: 140px 20px 80px;
+  }
+
+  .status-hero h1 {
+    font-size: 65px;
+    letter-spacing: -5px;
+  }
+
+  .status-dashboard {
+    padding: 80px 20px;
+  }
+
+  .status-overview {
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+
+  .status-row {
+    grid-template-columns: 30px 1fr;
+    gap: 10px;
+    padding: 15px 0;
+  }
+
+  .status-bar {
+    grid-column: 2;
+  }
+
+  .status-row em {
+    grid-column: 2;
+    text-align: left;
+  }
+
+  .status-bottom h2 {
+    font-size: 60px;
+  }
+}

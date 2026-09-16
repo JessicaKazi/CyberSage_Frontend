@@ -3,6 +3,7 @@ import ProductCard from "../Shop/ProductCard";
 import CategoryBar from "../Shop/CategoryBar";
 import Cart from "../Components/Cart";
 import Navbar from "../Components/Navbar";
+import Footer from "../Components/Footer";
 
 import "./Shop.css";
 
@@ -44,13 +45,14 @@ function Shop() {
     };
   }, []);
 
-
   useEffect(() => {
     localStorage.setItem("cybersageCart", JSON.stringify(cart));
   }, [cart]);
 
   useEffect(() => {
-    const elements = document.querySelectorAll(".shop-reveal, .product-reveal");
+    const elements = document.querySelectorAll(
+      ".shop-reveal, .product-reveal",
+    );
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -79,11 +81,12 @@ function Shop() {
         const response = await fetch(`${API_URL}/webproducts`);
 
         if (!response.ok) {
-          throw new Error(`Failed to fetch products: ${response.status}`);
+          throw new Error(
+            `Failed to fetch products: ${response.status}`,
+          );
         }
 
         const data = await response.json();
-        
 
         console.log("Products received from API:", data);
 
@@ -93,9 +96,14 @@ function Shop() {
             ? data.products
             : [];
 
-        setProducts(productList);
+        const formattedProducts = productList.map((product) => ({
+          ...product,
+          id: product.id || product._id,
+        }));
 
-        if (productList.length === 0) {
+        setProducts(formattedProducts);
+
+        if (formattedProducts.length === 0) {
           console.warn("API returned no products:", data);
         }
       } catch (error) {
@@ -237,7 +245,9 @@ function Shop() {
       }
 
       setCart((currentCart) =>
-        currentCart.filter((cartItem) => cartItem.id !== productId),
+        currentCart.filter(
+          (cartItem) => cartItem.id !== productId,
+        ),
       );
     } catch (error) {
       console.error("Remove cart error:", error);
@@ -267,7 +277,8 @@ function Shop() {
       const searchText = search.toLowerCase();
 
       const name = product.name?.toLowerCase() || "";
-      const productCategory = product.category?.toLowerCase() || "";
+      const productCategory =
+        product.category?.toLowerCase() || "";
       const specs = product.specs?.toLowerCase() || "";
       const tags = product.tags?.toLowerCase() || "";
 
@@ -298,13 +309,29 @@ function Shop() {
       return 0;
     });
 
-  const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+  const cartCount = cart.reduce(
+    (total, item) => total + item.quantity,
+    0,
+  );
 
   if (loading) {
     return (
       <div className="shop-loading">
-        <div className="loading-spinner"></div>
-        <p>Loading CyberSage products...</p>
+        <div className="loading-grid"></div>
+
+        <div className="loading-content">
+          <span>CYBERSAGE://VAULT</span>
+
+          <div className="loading-spinner"></div>
+
+          <p>INITIALISING HARDWARE DATABASE...</p>
+
+          <div className="loading-line">
+            <i></i>
+          </div>
+
+          <small>ESTABLISHING SECURE CONNECTION</small>
+        </div>
       </div>
     );
   }
@@ -314,20 +341,32 @@ function Shop() {
       <Navbar />
 
       <section className="shop-hero">
+        <div className="shop-grid"></div>
+
+        <div className="shop-scan-line"></div>
+
         <div className="shop-hero-content">
-          <p className="shop-eyebrow">CYBERSAGE / COMPONENT STORE</p>
+          <div className="shop-system-status">
+            <i></i>
+            VAULT ACCESS GRANTED
+          </div>
+
+          <p className="shop-eyebrow">
+            CYBERSAGE / HARDWARE VAULT
+          </p>
 
           <h1>
-            Build.
+            BUILD.
             <br />
-            Upgrade.
+            UPGRADE.
             <br />
             <span>FORTIFY.</span>
           </h1>
 
           <p className="shop-hero-description">
-            High-performance components selected for serious builders. From
-            processors and graphics cards to storage, memory and cooling.
+            High-performance components selected for serious
+            builders. Processors, graphics, memory, storage and
+            more — verified for your next system.
           </p>
 
           <div className="shop-hero-meta">
@@ -338,13 +377,27 @@ function Shop() {
         </div>
 
         <div className="shop-hero-visual">
-          <div className="hero-glow"></div>
+          <div className="hero-ring hero-ring-one"></div>
+          <div className="hero-ring hero-ring-two"></div>
+          <div className="hero-ring hero-ring-three"></div>
 
-          <div className="hero-product-shape">
+          <div className="hero-core">
             <span>CS</span>
           </div>
 
-          <p className="hero-visual-label">PERFORMANCE / PROTECTION</p>
+          <div className="hero-data hero-data-one">
+            <span>DATABASE</span>
+            <strong>ONLINE</strong>
+          </div>
+
+          <div className="hero-data hero-data-two">
+            <span>THREAT LEVEL</span>
+            <strong>0.00</strong>
+          </div>
+
+          <p className="hero-visual-label">
+            PERFORMANCE / PROTECTION
+          </p>
         </div>
       </section>
 
@@ -361,8 +414,9 @@ function Shop() {
 
         <div className="store-intro-right">
           <p>
-            Browse our selection of PC components. Every product is chosen
-            around reliability, performance and long-term stability.
+            Browse the CyberSage hardware vault. Every component
+            is selected around performance, reliability and
+            long-term system stability.
           </p>
 
           <div className="store-stats">
@@ -406,13 +460,24 @@ function Shop() {
               onChange={(e) => setSearch(e.target.value)}
             />
 
-            {search && <button onClick={() => setSearch("")}>×</button>}
+            {search && (
+              <button onClick={() => setSearch("")}>
+                ×
+              </button>
+            )}
           </div>
 
-          <select value={sort} onChange={(e) => setSort(e.target.value)}>
+          <select
+            value={sort}
+            onChange={(e) => setSort(e.target.value)}
+          >
             <option value="">SORT BY</option>
-            <option value="price-low">PRICE: LOW → HIGH</option>
-            <option value="price-high">PRICE: HIGH → LOW</option>
+            <option value="price-low">
+              PRICE: LOW → HIGH
+            </option>
+            <option value="price-high">
+              PRICE: HIGH → LOW
+            </option>
             <option value="name">NAME</option>
           </select>
         </div>
@@ -421,12 +486,19 @@ function Shop() {
       <section className="products-section">
         <div className="products-heading shop-reveal">
           <div>
-            <span>CYBERSAGE STORE</span>
+            <span>CYBERSAGE / VERIFIED HARDWARE</span>
 
-            <h2>{category === "All" ? "All Components" : category}</h2>
+            <h2>
+              {category === "All"
+                ? "All Components"
+                : category}
+            </h2>
           </div>
 
-          <p>{filteredProducts.length} products</p>
+          <div className="results-status">
+            <i></i>
+            {filteredProducts.length} PRODUCTS FOUND
+          </div>
         </div>
 
         {filteredProducts.length > 0 ? (
@@ -439,22 +511,33 @@ function Shop() {
                   "--delay": `${index * 70}ms`,
                 }}
               >
-                <ProductCard product={product} onAddToCart={addToCart} />
+                <ProductCard
+                  product={product}
+                  onAddToCart={addToCart}
+                />
               </div>
             ))}
           </main>
         ) : (
           <div className="no-products">
-            <div className="no-products-icon">/</div>
+            <div className="no-products-icon">
+              [ 404 ]
+            </div>
+
+            <span>QUERY RETURNED ZERO RESULTS</span>
 
             <h2>No components found.</h2>
 
-            <p>Try another search or category.</p>
+            <p>
+              The vault could not locate hardware matching
+              your search.
+            </p>
 
             <button
               onClick={() => {
                 setSearch("");
                 setCategory("All");
+                setSort("");
               }}
             >
               RESET FILTERS
@@ -465,7 +548,7 @@ function Shop() {
 
       <section className="shop-banner shop-reveal">
         <div className="banner-content">
-          <p>CYBERSAGE / PERFORMANCE</p>
+          <p>CYBERSAGE / HARDWARE DIVISION</p>
 
           <h2>
             Your next build
@@ -481,11 +564,12 @@ function Shop() {
               });
             }}
           >
-            EXPLORE COMPONENTS →
+            RETURN TO VAULT →
           </button>
         </div>
 
         <div className="banner-decoration">
+          <div></div>
           <span>CS</span>
         </div>
       </section>
@@ -501,10 +585,15 @@ function Shop() {
         />
       )}
 
-      <button className="floating-cart" onClick={() => setCartOpen(true)}>
-        <span>Cart</span>
+      <button
+        className="floating-cart"
+        onClick={() => setCartOpen(true)}
+      >
+        <span>CART</span>
         <strong>{cartCount}</strong>
       </button>
+
+      <Footer />
     </div>
   );
 }

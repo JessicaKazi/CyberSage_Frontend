@@ -1,11 +1,22 @@
 import "./Cart.css";
 import { useNavigate } from "react-router-dom";
 
-function Cart({ cart, onIncrease, onDecrease, onRemove, onClear, onClose }) {
-  const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+function Cart({
+  cart,
+  onIncrease,
+  onDecrease,
+  onRemove,
+  onClear,
+  onClose,
+}) {
+  const totalItems = cart.reduce(
+    (total, item) => total + item.quantity,
+    0,
+  );
 
   const subtotal = cart.reduce(
-    (total, item) => total + Number(item.price) * item.quantity,
+    (total, item) =>
+      total + Number(item.price) * item.quantity,
     0,
   );
 
@@ -28,50 +39,88 @@ function Cart({ cart, onIncrease, onDecrease, onRemove, onClear, onClose }) {
     <aside className="cart">
       <div className="cart-header">
         <div>
-          <h2>Your Cart</h2>
+          <span className="cart-system">
+            CYBERSAGE://CART
+          </span>
+
+          <h2>YOUR CART</h2>
 
           <p>
-            {totalItems} {totalItems === 1 ? "item" : "items"}
+            {totalItems}{" "}
+            {totalItems === 1 ? "ITEM" : "ITEMS"}
           </p>
         </div>
 
-        <button className="cart-close" onClick={onClose}>
+        <button
+          className="cart-close"
+          onClick={onClose}
+        >
           ×
         </button>
       </div>
 
       {cart.length === 0 ? (
         <div className="empty-cart">
-          <h3>Your cart is empty</h3>
+          <div className="empty-cart-icon">[ ]</div>
 
-          <p>Add some products to get started.</p>
+          <h3>VAULT EMPTY</h3>
+
+          <p>
+            No hardware has been added to your system.
+          </p>
         </div>
       ) : (
         <>
           <div className="cart-items">
             {cart.map((item) => (
-              <div className="cart-item" key={item.cartId || item._id}>
-                <img src={item.image} alt={item.name} />
+              <div
+                className="cart-item"
+                key={item.cartId || item.id}
+              >
+                <div className="cart-image">
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                  />
+                </div>
 
                 <div className="cart-item-info">
+                  <span>VERIFIED HARDWARE</span>
+
                   <h3>{item.name}</h3>
 
-                  <p>R{Number(item.price).toFixed(2)}</p>
+                  <p>
+                    R{Number(item.price).toFixed(2)}
+                  </p>
 
                   <div className="quantity-controls">
-                    <button onClick={() => onDecrease(item._id)}>−</button>
+                    <button
+                      onClick={() =>
+                        onDecrease(item.id)
+                      }
+                    >
+                      −
+                    </button>
 
                     <span>{item.quantity}</span>
 
-                    <button onClick={() => onIncrease(item._id)}>+</button>
+                    <button
+                      onClick={() =>
+                        onIncrease(item.id)
+                      }
+                    >
+                      +
+                    </button>
                   </div>
                 </div>
 
                 <button
                   className="remove-item"
-                  onClick={() => onRemove(item._id)}
+                  onClick={() =>
+                    onRemove(item.id)
+                  }
                 >
-                  Remove
+                  ×
                 </button>
               </div>
             ))}
@@ -79,17 +128,25 @@ function Cart({ cart, onIncrease, onDecrease, onRemove, onClear, onClose }) {
 
           <div className="cart-footer">
             <div className="cart-total">
-              <span>Subtotal</span>
+              <span>SUBTOTAL</span>
 
-              <strong>R{subtotal.toFixed(2)}</strong>
+              <strong>
+                R{subtotal.toFixed(2)}
+              </strong>
             </div>
 
-            <button className="checkout-button" onClick={handleCheckout}>
-              CHECKOUT
+            <button
+              className="checkout-button"
+              onClick={handleCheckout}
+            >
+              INITIALISE CHECKOUT →
             </button>
 
-            <button className="clear-cart-button" onClick={onClear}>
-              Clear Cart
+            <button
+              className="clear-cart-button"
+              onClick={onClear}
+            >
+              CLEAR SYSTEM CART
             </button>
           </div>
         </>

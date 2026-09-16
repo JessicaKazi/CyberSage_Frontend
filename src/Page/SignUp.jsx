@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import "./SignUp.css";
-
 import bgImage from "/assets/signup.jpg";
 import bgImage2 from "/assets/login.jpg";
-
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate, useLocation } from "react-router-dom";
-
 import { usePass } from "../protection/ProtectedPass";
 
 const API_URL = "http://localhost:3000";
@@ -28,9 +25,6 @@ const SignUp = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // -----------------------------
-  // Handle input changes
-  // -----------------------------
   const handleChange = (e) => {
     setFormData((previousData) => ({
       ...previousData,
@@ -40,9 +34,6 @@ const SignUp = () => {
     setError("");
   };
 
-  // -----------------------------
-  // Switch between Login / Signup
-  // -----------------------------
   const switchPage = (page) => {
     setCurrentPage(page);
 
@@ -55,9 +46,6 @@ const SignUp = () => {
     });
   };
 
-  // -----------------------------
-  // Submit
-  // -----------------------------
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -65,7 +53,6 @@ const SignUp = () => {
     setLoading(true);
 
     try {
-      // Basic frontend validation
       if (currentPage === "signup" && !formData.fullName.trim()) {
         throw new Error("Please enter your full name.");
       }
@@ -83,12 +70,9 @@ const SignUp = () => {
       }
 
       if (formData.password.length < 6) {
-        throw new Error(
-          "Password must be at least 6 characters long."
-        );
+        throw new Error("Password must be at least 6 characters long.");
       }
 
-      // Login only needs email + password
       const requestData =
         currentPage === "signup"
           ? {
@@ -102,43 +86,31 @@ const SignUp = () => {
             };
 
       const endpoint =
-        currentPage === "signup"
-          ? `${API_URL}/signup`
-          : `${API_URL}/login`;
+        currentPage === "signup" ? `${API_URL}/signup` : `${API_URL}/login`;
 
-      const response = await fetch(endpoint, {
+      const response = await fetch(`${API_URL}/login`, {
         method: "POST",
-
         headers: {
           "Content-Type": "application/json",
         },
-
-        body: JSON.stringify(requestData),
+        body: JSON.stringify(formData),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(
-          data.message || "Something went wrong."
-        );
+        throw new Error(data.message || "Something went wrong.");
       }
 
-      // -----------------------------
-      // Authentication
-      // -----------------------------
+      if (currentPage === "login" && data.user) {
+        localStorage.setItem("user", JSON.stringify(data.user));
+      }
+
       login();
 
-      // -----------------------------
-      // Success message
-      // -----------------------------
       setError("");
 
-      // -----------------------------
-      // Redirect
-      // -----------------------------
-      const origin =
-        location.state?.from?.pathname || "/Home";
+      const origin = location.state?.from?.pathname || "/Home";
 
       navigate(origin, {
         replace: true,
@@ -146,285 +118,322 @@ const SignUp = () => {
     } catch (error) {
       console.error("Authentication error:", error);
 
-      setError(
-        error.message || "Something went wrong. Please try again."
-      );
+      setError(error.message || "Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="auth-page">
+    <div className="signupPage">
+      <div className="signupGrid"></div>
 
-      {/* ======================================
-          SIGN UP
-      ====================================== */}
+      <div className="signupGlow"></div>
 
       {currentPage === "signup" && (
-        <div className="full-page-wrapper">
-
-          <div
-            className="full-image-section"
-            style={{
-              backgroundImage: `url(${bgImage})`,
-            }}
-          >
-            <div className="image-overlay">
-              <h1>CyberSage</h1>
-
-              <p>
-                Protect your system.
-                <br />
-                Build with confidence.
-              </p>
+        <>
+          <section className="signupVisual">
+            <div className="visualCode visualCodeTop">
+              CYBERSAGE // SYSTEM ACCESS
             </div>
-          </div>
 
-          <div className="full-form-section">
+            <div className="visualCode visualCodeBottom">
+              SIGNUP_01 // NEW USER
+            </div>
 
-            <div className="form-container">
+            <div className="visualOrb"></div>
 
-              <h2 className="form-title">
-                Create An Account
-              </h2>
+            <div className="imageCard">
+              <span className="corner cornerTL"></span>
+              <span className="corner cornerTR"></span>
+              <span className="corner cornerBL"></span>
+              <span className="corner cornerBR"></span>
 
-              <p className="form-subtitle">
-                Join CyberSage today
-              </p>
+              <img src={bgImage} alt="CyberSage system access" />
+
+              <div className="imageOverlay"></div>
+
+              <div className="imageLabel">
+                <span>CYBERSAGE</span>
+                <small>SYSTEM ACCESS</small>
+              </div>
+            </div>
+
+            <div className="statusCard statusCardOne">
+              <span className="statusDot"></span>
+
+              <div>
+                <strong>SYSTEM</strong>
+                <small>ONLINE</small>
+              </div>
+            </div>
+
+            <div className="statusCard statusCardTwo">
+              <span className="statusIcon">01</span>
+
+              <div>
+                <strong>SECURE</strong>
+                <small>REGISTRATION</small>
+              </div>
+            </div>
+          </section>
+
+          <section className="signupFormArea">
+            <div className="signupFormBox">
+              <div className="formHeader">
+                <span className="formTag">[ NEW USER ]</span>
+
+                <h1>
+                  CREATE
+                  <span> ACCESS.</span>
+                </h1>
+
+                <p>
+                  Build your CyberSage account and start
+                  <br />
+                  protecting what matters.
+                </p>
+              </div>
 
               <form onSubmit={handleSubmit}>
+                <div className="inputGroup">
+                  <label htmlFor="fullName">FULL NAME</label>
 
-                {/* Full Name */}
+                  <input
+                    id="fullName"
+                    type="text"
+                    name="fullName"
+                    placeholder="Enter your name"
+                    value={formData.fullName}
+                    onChange={handleChange}
+                    autoComplete="name"
+                  />
+                </div>
 
-                <input
-                  type="text"
-                  name="fullName"
-                  placeholder="Full Name"
-                  value={formData.fullName}
-                  onChange={handleChange}
-                  className="pill-input"
-                  autoComplete="name"
-                />
+                <div className="inputGroup">
+                  <label htmlFor="signupEmail">EMAIL ADDRESS</label>
 
-                {/* Email */}
+                  <input
+                    id="signupEmail"
+                    type="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    autoComplete="email"
+                  />
+                </div>
 
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="pill-input"
-                  autoComplete="email"
-                />
+                <div className="inputGroup">
+                  <label htmlFor="signupPassword">PASSWORD</label>
 
-                {/* Password */}
+                  <input
+                    id="signupPassword"
+                    type="password"
+                    name="password"
+                    placeholder="Create password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    autoComplete="new-password"
+                  />
+                </div>
 
-                <input
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  className="pill-input"
-                  autoComplete="new-password"
-                />
-
-                {/* Error */}
-
-                {error && (
-                  <div className="error-message">
-                    {error}
-                  </div>
-                )}
-
-                {/* Login link */}
-
-                <p className="switch-text">
-                  Already have an account?{" "}
-
-                  <button
-                    type="button"
-                    className="switch-button"
-                    onClick={() => switchPage("login")}
-                  >
-                    Log In
-                  </button>
-                </p>
-
-                {/* Submit */}
+                {error && <div className="signupError">{error}</div>}
 
                 <button
                   type="submit"
-                  className="submit-btn"
+                  className="signupButton"
                   disabled={loading}
                 >
-                  {loading ? "Creating Account..." : "Sign Up"}
-                </button>
+                  <span>{loading ? "CREATING..." : "CREATE ACCOUNT"}</span>
 
+                  <span className="buttonArrow">→</span>
+                </button>
               </form>
 
-              {/* Divider */}
+              <div className="loginPrompt">
+                <span>ALREADY HAVE ACCESS?</span>
 
-              <div className="divider">
-
-                <div className="divider-line"></div>
-
-                <span className="or-text">
-                  or
-                </span>
-
-                <div className="divider-line"></div>
-
+                <button
+                  type="button"
+                  className="switch-button"
+                  onClick={() => switchPage("login")}
+                >
+                  SIGN IN
+                </button>
               </div>
 
-              {/* Google */}
+              <div className="divider">
+                <div className="divider-line"></div>
+
+                <span className="or-text">OR</span>
+
+                <div className="divider-line"></div>
+              </div>
 
               <button
                 type="button"
                 className="google-btn"
-                onClick={() =>
-                  alert("Google authentication coming soon.")
-                }
+                onClick={() => alert("Google authentication coming soon.")}
               >
-                <span>Continue with Google</span>
+                <span>CONTINUE WITH GOOGLE</span>
 
                 <FcGoogle className="google-icon" />
               </button>
 
+              <div className="formFooter">
+                <span>CYBERSAGE_SECURITY</span>
+                <span>v2.0.26</span>
+              </div>
             </div>
-          </div>
-        </div>
+          </section>
+        </>
       )}
 
-      {/* ======================================
-          LOGIN
-      ====================================== */}
-
       {currentPage === "login" && (
-        <div className="full-page-wrapper">
-
-          <div
-            className="full-image-section-two"
-            style={{
-              backgroundImage: `url(${bgImage2})`,
-            }}
-          >
-            <div className="image-overlay">
-              <h1>CyberSage</h1>
-
-              <p>
-                Welcome back.
-                <br />
-                Your system awaits.
-              </p>
+        <>
+          <section className="signupVisual">
+            <div className="visualCode visualCodeTop">
+              CYBERSAGE // SYSTEM ACCESS
             </div>
-          </div>
 
-          <div className="full-form-section">
+            <div className="visualCode visualCodeBottom">
+              LOGIN_01 // RETURNING USER
+            </div>
 
-            <div className="form-container">
+            <div className="visualOrb"></div>
 
-              <h2 className="form-title">
-                Welcome Back
-              </h2>
+            <div className="imageCard">
+              <span className="corner cornerTL"></span>
+              <span className="corner cornerTR"></span>
+              <span className="corner cornerBL"></span>
+              <span className="corner cornerBR"></span>
 
-              <p className="form-subtitle">
-                Log in to your account
-              </p>
+              <img src={bgImage2} alt="CyberSage login" />
+
+              <div className="imageOverlay"></div>
+
+              <div className="imageLabel">
+                <span>CYBERSAGE</span>
+                <small>SECURE LOGIN</small>
+              </div>
+            </div>
+
+            <div className="statusCard statusCardOne">
+              <span className="statusDot"></span>
+
+              <div>
+                <strong>SYSTEM</strong>
+                <small>READY</small>
+              </div>
+            </div>
+
+            <div className="statusCard statusCardTwo">
+              <span className="statusIcon">02</span>
+
+              <div>
+                <strong>ENCRYPTED</strong>
+                <small>CONNECTION</small>
+              </div>
+            </div>
+          </section>
+
+          <section className="signupFormArea">
+            <div className="signupFormBox">
+              <div className="formHeader">
+                <span className="formTag">[ RETURNING USER ]</span>
+
+                <h1>
+                  SYSTEM
+                  <span> ACCESS.</span>
+                </h1>
+
+                <p>
+                  Welcome back to CyberSage.
+                  <br />
+                  Continue where you left off.
+                </p>
+              </div>
 
               <form onSubmit={handleSubmit}>
+                <div className="inputGroup">
+                  <label htmlFor="loginEmail">EMAIL ADDRESS</label>
 
-                {/* Email */}
+                  <input
+                    id="loginEmail"
+                    type="email"
+                    name="email"
+                    placeholder="Enter your email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    autoComplete="email"
+                  />
+                </div>
 
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="pill-input"
-                  autoComplete="email"
-                />
+                <div className="inputGroup">
+                  <label htmlFor="loginPassword">PASSWORD</label>
 
-                {/* Password */}
+                  <input
+                    id="loginPassword"
+                    type="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    autoComplete="current-password"
+                  />
+                </div>
 
-                <input
-                  type="password"
-                  name="password"
-                  placeholder="Password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  className="pill-input"
-                  autoComplete="current-password"
-                />
-
-                {/* Error */}
-
-                {error && (
-                  <div className="error-message">
-                    {error}
-                  </div>
-                )}
-
-                {/* Signup link */}
-
-                <p className="switch-text">
-                  Don't have an account?{" "}
-
-                  <button
-                    type="button"
-                    className="switch-button"
-                    onClick={() => switchPage("signup")}
-                  >
-                    Sign Up
-                  </button>
-                </p>
-
-                {/* Submit */}
+                {error && <div className="signupError">{error}</div>}
 
                 <button
                   type="submit"
-                  className="submit-btn"
+                  className="signupButton"
                   disabled={loading}
                 >
-                  {loading ? "Logging In..." : "Log In"}
-                </button>
+                  <span>{loading ? "AUTHENTICATING..." : "ENTER SYSTEM"}</span>
 
+                  <span className="buttonArrow">→</span>
+                </button>
               </form>
 
-              {/* Divider */}
+              <div className="loginPrompt">
+                <span>NEW TO CYBERSAGE?</span>
 
-              <div className="divider">
-
-                <div className="divider-line"></div>
-
-                <span className="or-text">
-                  or
-                </span>
-
-                <div className="divider-line"></div>
-
+                <button
+                  type="button"
+                  className="switch-button"
+                  onClick={() => switchPage("signup")}
+                >
+                  CREATE ACCOUNT
+                </button>
               </div>
 
-              {/* Google */}
+              <div className="divider">
+                <div className="divider-line"></div>
+
+                <span className="or-text">OR</span>
+
+                <div className="divider-line"></div>
+              </div>
 
               <button
                 type="button"
                 className="google-btn"
-                onClick={() =>
-                  alert("Google authentication coming soon.")
-                }
+                onClick={() => alert("Google authentication coming soon.")}
               >
-                <span>Continue with Google</span>
+                <span>CONTINUE WITH GOOGLE</span>
 
                 <FcGoogle className="google-icon" />
               </button>
 
+              <div className="formFooter">
+                <span>CYBERSAGE_SECURITY</span>
+                <span>v2.0.26</span>
+              </div>
             </div>
-          </div>
-        </div>
+          </section>
+        </>
       )}
     </div>
   );

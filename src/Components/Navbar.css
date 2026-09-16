@@ -1,36 +1,174 @@
-.navbar {
-  position: fixed;
+.cyber-nav {
+  position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 48px;
-  background: rgba(0, 0, 0, 0.82);
-  backdrop-filter: blur(15px);
-  z-index: 1000;
-}
-
-.nav-container {
-  max-width: 1000px;
-  height: 100%;
-  margin: 0 auto;
-  padding: 0 20px;
+  right: 0;
+  height: 82px;
+  padding: 0 6%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  z-index: 1000;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.95),
+    rgba(0, 0, 0, 0)
+  );
 }
 
-.nav-links {
-  display: flex;
-  gap: 35px;
-}
-
-.nav-links a {
-  color: #aaa;
+.cyber-logo {
+  color: #fff;
   text-decoration: none;
-  font-size: 13px;
-  transition: color 0.2s ease;
+  font-size: 17px;
+  font-weight: 900;
+  letter-spacing: -1px;
 }
 
-.nav-links a:hover {
-  color: white;
+.cyber-logo span {
+  color: #a30e25;
+}
+
+.cyber-links {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.cyber-links a {
+  position: relative;
+  color: #777;
+  text-decoration: none;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  transition: 0.3s ease;
+}
+
+.cyber-links a span {
+  margin-right: 5px;
+  color: #a30e25;
+  font-family: monospace;
+  opacity: 0;
+  transition: 0.3s ease;
+}
+
+.cyber-links a:hover {
+  color: #fff;
+}
+
+.cyber-links a:hover span {
+  opacity: 1;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border: none;
+  background: transparent;
+  color: #555;
+  font-size: 7px;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+.nav-status i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #a30e25;
+  box-shadow: 0 0 10px #a30e25;
+}
+
+.nav-menu {
+  display: none;
+  width: 35px;
+  height: 35px;
+  padding: 7px;
+  border: 1px solid #333;
+  background: transparent;
+  cursor: pointer;
+}
+
+.nav-menu span {
+  display: block;
+  width: 100%;
+  height: 1px;
+  margin: 4px 0;
+  background: #fff;
+}
+
+.mobile-status {
+  display: none;
+}
+
+.admin-orders-link {
+  color: #a30e25 !important;
+}
+
+.admin-orders-link span {
+  opacity: 1 !important;
+  color: #a30e25 !important;
+}
+
+.admin-orders-link:hover {
+  color: #fff !important;
+}
+
+.admin-orders-link:hover span {
+  color: #a30e25 !important;
+}
+
+@media (max-width: 900px) {
+  .cyber-nav {
+    padding: 0 20px;
+  }
+
+  .nav-status {
+    display: none;
+  }
+
+  .nav-menu {
+    display: block;
+  }
+
+  .cyber-links {
+    position: fixed;
+    inset: 0;
+    padding: 120px 30px 40px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 25px;
+    background: #000;
+    transform: translateX(100%);
+    transition: 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .cyber-links.nav-open {
+    transform: translateX(0);
+  }
+
+  .cyber-links a {
+    font-size: 25px;
+    letter-spacing: -1px;
+  }
+
+  .cyber-links a span {
+    opacity: 1;
+    font-size: 9px;
+    letter-spacing: 1px;
+  }
+
+  .mobile-status {
+    display: block !important;
+    color: #a30e25 !important;
+    margin-top: 30px;
+  }
 }

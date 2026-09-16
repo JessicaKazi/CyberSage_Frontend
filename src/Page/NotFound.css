@@ -1,0 +1,96 @@
+.not-found {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: #000;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.15;
+  background-image:
+    linear-gradient(#a30e25 1px, transparent 1px),
+    linear-gradient(90deg, #a30e25 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+.error-content {
+  position: relative;
+  z-index: 2;
+  width: min(90%, 650px);
+  padding: 50px;
+  border: 1px solid #292929;
+  background: #050505;
+  text-align: center;
+}
+
+.error-content > span {
+  color: #a30e25;
+  font-family: monospace;
+  font-size: 9px;
+  letter-spacing: 3px;
+}
+
+.error-content h1 {
+  margin: 30px 0 0;
+  font-size: 150px;
+  line-height: 0.8;
+  letter-spacing: -10px;
+}
+
+.error-content h2 {
+  margin: 30px 0 15px;
+  font-size: 25px;
+}
+
+.error-content > p {
+  color: #666;
+  font-size: 12px;
+}
+
+.error-terminal {
+  margin: 35px 0;
+  padding: 20px;
+  border: 1px solid #222;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #555;
+  font-family: monospace;
+  font-size: 8px;
+}
+
+.error-terminal strong {
+  color: #a30e25;
+}
+
+.error-content a {
+  display: inline-block;
+  padding: 14px 22px;
+  border: 1px solid #a30e25;
+  color: #fff;
+  text-decoration: none;
+  font-size: 8px;
+  letter-spacing: 1.5px;
+  transition: 0.3s ease;
+}
+
+.error-content a:hover {
+  background: #a30e25;
+}
+
+@media (max-width: 500px) {
+  .error-content {
+    padding: 30px 20px;
+  }
+
+  .error-content h1 {
+    font-size: 100px;
+  }
+}

@@ -1,463 +1,101 @@
-import { useEffect } from "react";
-import "./About.css";
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
+import "./About.css";
 
 function About() {
-
-  useEffect(() => {
-
-    const revealElements =
-      document.querySelectorAll(".about-reveal");
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-
-        entries.forEach((entry) => {
-
-          if (entry.isIntersecting) {
-
-            entry.target.classList.add(
-              "about-show"
-            );
-
-            observer.unobserve(entry.target);
-
-          }
-
-        });
-
-      },
-      {
-        threshold: 0.15,
-      }
-    );
-
-    revealElements.forEach((element) => {
-      observer.observe(element);
-    });
-
-    return () => {
-      observer.disconnect();
-    };
-
-  }, []);
-
+  const timeline = [
+    ["2026", "CYBERSAGE INITIALISED"],
+    ["001", "FIRST VERIFIED BUILD"],
+    ["002", "SECURITY LAB ACTIVATED"],
+    ["003", "HARDWARE VAULT OPENED"],
+    ["NOW", "SYSTEM ONLINE"],
+  ];
 
   return (
-
-    <main className="about-page">
-
+    <>
       <Navbar />
 
-      {/* =================================
-          PAGE HERO
-      ================================= */}
-
-      <section className="about-hero">
-
-        <div className="about-hero-overlay"></div>
-
-        <div className="about-hero-content">
-
-          <p className="about-small-title">
-            ABOUT CYBERSAGE
-          </p>
+      <main className="about-page">
+        <section className="about-hero">
+          <span className="section-label">
+            / CYBERSAGE INTELLIGENCE
+          </span>
 
           <h1>
-            About Us
+            WE DIDN'T BUILD
+            <br />
+            ANOTHER
+            <br />
+            <span>HARDWARE STORE.</span>
           </h1>
 
-          <div className="about-breadcrumb">
-
-            <span>Home</span>
-
-            <span>/</span>
-
-            <strong>About Us</strong>
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-
-      {/* =================================
-          ABOUT INTRO
-      ================================= */}
-
-      <section className="about-intro">
-
-        <div className="about-intro-image about-reveal">
-
-          <img
-            src="/assets/about/about-team.jpg"
-            alt="CyberSage team working"
-          />
-
-        </div>
-
-
-        <div className="about-intro-content about-reveal">
-
-          <p className="about-label">
-            ABOUT US
+          <p>
+            We built a defence system for people who expect
+            more from their technology.
           </p>
+        </section>
+
+        <section className="about-statement">
+          <span className="section-label">
+            / THE PHILOSOPHY
+          </span>
 
           <h2>
-            We Always Make
+            PERFORMANCE
             <br />
-            <span>The Best</span>
+            IS ONLY HALF
+            <br />
+            THE <span>MISSION.</span>
           </h2>
-
-          <p className="about-description">
-
-            CyberSage is dedicated to providing
-            reliable, high-performance computer
-            hardware for gamers, creators,
-            developers and businesses.
-
-          </p>
-
-          <p className="about-description">
-
-            Every component we offer is carefully
-            selected and tested for performance,
-            reliability and long-term stability.
-
-          </p>
-
-
-          <button className="about-button">
-            Contact Us
-          </button>
-
-        </div>
-
-      </section>
-
-
-
-      {/* =================================
-          SKILLS + STATISTICS
-      ================================= */}
-
-      <section className="about-skills">
-
-        <div className="skills-container">
-
-
-          {/* LEFT */}
-
-          <div className="skills-content about-reveal">
-
-            <p className="about-label">
-              OUR SKILLS
-            </p>
-
-            <h2>
-              Built around
-              <br />
-              <span>performance.</span>
-            </h2>
-
-            <p className="skills-description">
-
-              From component selection to system
-              optimisation, our focus is making
-              technology dependable, powerful and
-              ready for whatever you throw at it.
-
-            </p>
-
-
-            {/* Skill 1 */}
-
-            <div className="skill">
-
-              <div className="skill-header">
-
-                <span>
-                  Performance
-                </span>
-
-                <span>
-                  95%
-                </span>
-
-              </div>
-
-              <div className="skill-line">
-
-                <div
-                  className="skill-progress progress-95"
-                ></div>
-
-              </div>
-
-            </div>
-
-
-            {/* Skill 2 */}
-
-            <div className="skill">
-
-              <div className="skill-header">
-
-                <span>
-                  Reliability
-                </span>
-
-                <span>
-                  90%
-                </span>
-
-              </div>
-
-              <div className="skill-line">
-
-                <div
-                  className="skill-progress progress-90"
-                ></div>
-
-              </div>
-
-            </div>
-
-
-            {/* Skill 3 */}
-
-            <div className="skill">
-
-              <div className="skill-header">
-
-                <span>
-                  Innovation
-                </span>
-
-                <span>
-                  85%
-                </span>
-
-              </div>
-
-              <div className="skill-line">
-
-                <div
-                  className="skill-progress progress-85"
-                ></div>
-
-              </div>
-
-            </div>
-
-          </div>
-
-
-
-          {/* RIGHT - STATISTICS */}
-
-          <div className="about-statistics">
-
-
-            <div className="about-stat about-reveal">
-
-              <strong>
-                5+
-              </strong>
-
-              <span>
-                YEARS OF
-                <br />
-                EXPERIENCE
-              </span>
-
-            </div>
-
-
-            <div className="about-stat about-reveal">
-
-              <strong>
-                1,000+
-              </strong>
-
-              <span>
-                PRODUCTS
-                <br />
-                AVAILABLE
-              </span>
-
-            </div>
-
-
-            <div className="about-stat about-reveal">
-
-              <strong>
-                300+
-              </strong>
-
-              <span>
-                SATISFIED
-                <br />
-                CUSTOMERS
-              </span>
-
-            </div>
-
-
-            <div className="about-stat about-reveal">
-
-              <strong>
-                64
-              </strong>
-
-              <span>
-                VERIFIED
-                <br />
-                BUILDS
-              </span>
-
-            </div>
-
-
-          </div>
-
-        </div>
-
-      </section>
-
-
-
-      {/* =================================
-          LARGE IMAGE / CTA
-      ================================= */}
-
-      <section className="about-cta about-reveal">
-
-        <img
-          src="/assets/about/about-computer.jpg"
-          alt="Computer hardware"
-        />
-
-        <div className="about-cta-overlay"></div>
-
-
-        <div className="about-cta-content">
 
           <p>
-            BUILD WITH US
+            CyberSage exists at the intersection of performance,
+            reliability and digital security. Every component is
+            part of a larger system.
           </p>
+        </section>
+
+        <section className="timeline-section">
+          <div className="timeline-heading">
+            <span className="section-label">
+              / SYSTEM LOG
+            </span>
+
+            <h2>THE JOURNEY.</h2>
+          </div>
+
+          <div className="timeline">
+            {timeline.map(([year, title], index) => (
+              <div className="timeline-item" key={title}>
+                <span>{year}</span>
+
+                <div className="timeline-dot">
+                  {String(index + 1).padStart(2, "0")}
+                </div>
+
+                <strong>{title}</strong>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="about-final">
+          <span>CYBERSAGE // CORE PRINCIPLE</span>
 
           <h2>
-
-            We Are Always Ready
+            ASSUME
             <br />
-            To Build Something
+            <span>NOTHING.</span>
             <br />
-            <span>Powerful.</span>
-
+            VERIFY
+            <br />
+            EVERYTHING.
           </h2>
+        </section>
+      </main>
 
-
-          <button className="about-button about-button-light">
-            Get Started
-          </button>
-
-        </div>
-
-      </section>
-
-
-
-      {/* =================================
-          VALUES
-      ================================= */}
-
-      <section className="about-values">
-
-        <div className="values-heading about-reveal">
-
-          <p className="about-label">
-            WHY CYBERSAGE
-          </p>
-
-          <h2>
-            Technology
-            <br />
-            without the
-            <span> guesswork.</span>
-          </h2>
-
-        </div>
-
-
-        <div className="values-grid">
-
-
-          <article className="value-card about-reveal">
-
-            <span className="value-number">
-              01
-            </span>
-
-            <h3>
-              Performance
-            </h3>
-
-            <p>
-              Hardware selected for speed,
-              efficiency and demanding workloads.
-            </p>
-
-          </article>
-
-
-          <article className="value-card about-reveal">
-
-            <span className="value-number">
-              02
-            </span>
-
-            <h3>
-              Protection
-            </h3>
-
-            <p>
-              Reliable components designed to
-              protect your system and your data.
-            </p>
-
-          </article>
-
-
-          <article className="value-card about-reveal">
-
-            <span className="value-number">
-              03
-            </span>
-
-            <h3>
-              Reliability
-            </h3>
-
-            <p>
-              Every component should perform
-              consistently long after installation.
-            </p>
-
-          </article>
-
-
-        </div>
-
-      </section>
-
-
-    <Footer />
-    </main>
-
+      <Footer />
+    </>
   );
 }
 

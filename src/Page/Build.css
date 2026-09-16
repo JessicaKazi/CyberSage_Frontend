@@ -1,0 +1,253 @@
+.build-page {
+  background: #000;
+  color: #fff;
+  min-height: 100vh;
+}
+
+.build-hero {
+  padding: 180px 7% 100px;
+  border-bottom: 1px solid #222;
+}
+
+.build-hero h1 {
+  margin: 30px 0;
+  font-size: clamp(65px, 10vw, 130px);
+  line-height: 0.78;
+  letter-spacing: -8px;
+}
+
+.build-hero h1 span {
+  color: #a30e25;
+}
+
+.build-hero p {
+  color: #666;
+  font-size: 14px;
+}
+
+.builder {
+  max-width: 1250px;
+  margin: auto;
+  padding: 100px 30px;
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 50px;
+  align-items: start;
+}
+
+.component-group {
+  margin-bottom: 45px;
+  border-top: 1px solid #222;
+}
+
+.component-heading {
+  padding: 18px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.component-heading span {
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+.component-heading small {
+  color: #555;
+  font-size: 7px;
+}
+
+.component-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: #222;
+}
+
+.component-options button {
+  min-height: 100px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: left;
+  border: none;
+  background: #090909;
+  color: #666;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.component-options button:hover,
+.component-options button.selected {
+  background: #a30e25;
+  color: #fff;
+}
+
+.component-options button span {
+  font-size: 11px;
+}
+
+.component-options button strong {
+  font-size: 9px;
+}
+
+.build-terminal {
+  position: sticky;
+  top: 30px;
+  padding: 20px;
+  border: 1px solid #292929;
+  background: #060606;
+}
+
+.terminal-header {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #222;
+  color: #555;
+  font-family: monospace;
+  font-size: 7px;
+  letter-spacing: 1px;
+}
+
+.terminal-header span:last-child {
+  color: #a30e25;
+}
+
+.terminal-status,
+.build-score,
+.build-total {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25px;
+}
+
+.terminal-status span,
+.build-score span,
+.build-total span {
+  color: #555;
+  font-size: 7px;
+  letter-spacing: 1px;
+}
+
+.terminal-status strong,
+.build-score strong {
+  color: #a30e25;
+  font-size: 10px;
+}
+
+.build-progress {
+  height: 2px;
+  margin-top: 10px;
+  background: #222;
+}
+
+.build-progress span {
+  display: block;
+  height: 100%;
+  background: #a30e25;
+  transition: 0.6s ease;
+}
+
+.score-ring {
+  width: 180px;
+  height: 180px;
+  margin: 35px auto;
+  border: 1px solid #a30e25;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 0 30px rgba(163, 14, 37, 0.1),
+    inset 0 0 30px rgba(163, 14, 37, 0.04);
+}
+
+.score-ring div {
+  text-align: center;
+}
+
+.score-ring strong {
+  display: block;
+  font-size: 45px;
+}
+
+.score-ring span {
+  color: #555;
+  font-size: 7px;
+  letter-spacing: 2px;
+}
+
+.build-summary {
+  border-top: 1px solid #222;
+}
+
+.build-summary div {
+  padding: 12px 0;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #222;
+}
+
+.build-summary span {
+  color: #444;
+  font-size: 7px;
+}
+
+.build-summary strong {
+  color: #777;
+  font-size: 8px;
+}
+
+.build-total strong {
+  font-size: 18px;
+}
+
+.deploy-button {
+  width: 100%;
+  margin-top: 30px;
+  padding: 15px;
+  border: 1px solid #a30e25;
+  background: #a30e25;
+  color: #fff;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.deploy-button:hover {
+  background: #6d111e;
+  box-shadow: 0 0 30px rgba(163, 14, 37, 0.3);
+}
+
+@media (max-width: 900px) {
+  .builder {
+    grid-template-columns: 1fr;
+  }
+
+  .build-terminal {
+    position: relative;
+    top: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .build-hero {
+    padding: 140px 20px 80px;
+  }
+
+  .build-hero h1 {
+    font-size: 65px;
+    letter-spacing: -5px;
+  }
+
+  .builder {
+    padding: 70px 20px;
+  }
+
+  .component-options {
+    grid-template-columns: 1fr;
+  }
+}
