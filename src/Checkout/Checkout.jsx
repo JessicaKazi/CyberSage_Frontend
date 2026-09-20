@@ -2,8 +2,7 @@ import React, { useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./Checkout.css";
 
-const API_URL =
-  import.meta.env.VITE_API_URL || "http://localhost:3000";
+const API_URL = import.meta.env.VITE_API_URL;
 
 function Checkout() {
   const location = useLocation();

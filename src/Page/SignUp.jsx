@@ -6,7 +6,7 @@ import { FcGoogle } from "react-icons/fc";
 import { useNavigate, useLocation } from "react-router-dom";
 import { usePass } from "../protection/ProtectedPass";
 
-const API_URL = "http://localhost:3000";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const SignUp = () => {
   const [currentPage, setCurrentPage] = useState("signup");
