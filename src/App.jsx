@@ -1,6 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-
+import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
 import Home from "./Page/Home";
 import Shop from "./Page/Shop";
 import SignUp from "./Page/SignUp";
@@ -20,7 +19,7 @@ import { PasswordProvider } from "./protection/ProtectedPass";
 function App() {
   return (
     <PasswordProvider>
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route path="/SignUp" element={<SignUp />} />
 
@@ -46,7 +45,7 @@ function App() {
 
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </PasswordProvider>
   );
 }
