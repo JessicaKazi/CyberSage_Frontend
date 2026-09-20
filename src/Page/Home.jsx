@@ -141,7 +141,7 @@ function Home() {
               <h1>
                 BUILD
                 <br />
-                <span>BEYOND</span>
+                <span>AGAINST</span>
                 <br />
                 THE THREAT.
               </h1>
