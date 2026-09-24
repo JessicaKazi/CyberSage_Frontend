@@ -90,7 +90,7 @@ const SignUp = () => {
 
       const endpoint =
         currentPage === "signup" ? `${API_URL}/signup` : `${API_URL}/login`;
-        
+
       const response = await fetch(endpoint, {
         method: "POST",
         headers: {
@@ -112,7 +112,7 @@ const SignUp = () => {
           fullName: "",
           password: "",
         }));
-        setSuccessMessage("Account created. Please sign in below.");
+        setSuccessMessage("Account created. Please sign in below to confirm credentials.");
         return;
       }
 
