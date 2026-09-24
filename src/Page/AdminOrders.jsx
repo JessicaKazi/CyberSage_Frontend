@@ -4,6 +4,8 @@ import "./AdminOrders.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
+const ORDER_STATUSES = ["Pending", "Processing", "Shipped", "Delivered", "Cancelled"];
+
 function AdminOrders() {
   const navigate = useNavigate();
 
@@ -82,6 +84,9 @@ function AdminOrders() {
     return order._id || order.id || order.orderId || "UNKNOWN";
   };
 
+  // Normalised to lowercase for comparisons/CSS classes/display only.
+  // The value actually sent to the backend (see updateStatus) stays in
+  // the exact casing the server expects.
   const getOrderStatus = (order) => {
     return (order.status || order.orderStatus || "pending").toLowerCase();
   };
@@ -145,8 +150,6 @@ function AdminOrders() {
 
   const filteredOrders = useMemo(() => {
     return orders.filter((order) => {
-      const customer = getCustomer(order);
-
       const query = search.toLowerCase().trim();
 
       const orderId = String(getOrderId(order)).toLowerCase();
@@ -183,8 +186,8 @@ function AdminOrders() {
       (order) => getOrderStatus(order) === "processing",
     ).length;
 
-    const completed = orders.filter((order) =>
-      ["completed", "delivered", "paid"].includes(getOrderStatus(order)),
+    const completed = orders.filter(
+      (order) => getOrderStatus(order) === "delivered",
     ).length;
 
     return {
@@ -217,7 +220,7 @@ function AdminOrders() {
 
       setOrders((currentOrders) =>
         currentOrders.map((order) =>
-          String(order._id) === String(orderId)
+          String(getOrderId(order)) === String(orderId)
             ? {
                 ...order,
                 status: data.status,
@@ -317,7 +320,7 @@ function AdminOrders() {
         </div>
 
         <div className="stat-card">
-          <span className="stat-label">COMPLETED</span>
+          <span className="stat-label">DELIVERED</span>
 
           <strong>{statistics.completed}</strong>
 
@@ -345,11 +348,11 @@ function AdminOrders() {
             onChange={(e) => setStatusFilter(e.target.value)}
           >
             <option value="all">ALL ORDERS</option>
-            <option value="pending">PENDING</option>
-            <option value="processing">PROCESSING</option>
-            <option value="completed">COMPLETED</option>
-            <option value="delivered">DELIVERED</option>
-            <option value="cancelled">CANCELLED</option>
+            {ORDER_STATUSES.map((status) => (
+              <option key={status} value={status.toLowerCase()}>
+                {status.toUpperCase()}
+              </option>
+            ))}
           </select>
         </div>
 
@@ -566,17 +569,18 @@ function AdminOrders() {
                         <span>UPDATE ORDER STATUS</span>
 
                         <div>
-                          {[
-                            "pending",
-                            "processing",
-                            "completed",
-                            "delivered",
-                            "cancelled",
-                          ].map((option) => (
+                          {/* FIX: onClick used to call updateStatus(order, option),
+                              sending the whole order object into a template
+                              literal (`/orders/[object Object]/status`). It now
+                              sends the actual orderId, and `option` is the
+                              exact-cased value the backend enum expects. */}
+                          {ORDER_STATUSES.map((option) => (
                             <button
                               key={option}
-                              className={status === option ? "active" : ""}
-                              onClick={() => updateStatus(order, option)}
+                              className={
+                                status === option.toLowerCase() ? "active" : ""
+                              }
+                              onClick={() => updateStatus(orderId, option)}
                             >
                               {option}
                             </button>

@@ -1,0 +1,235 @@
+.palette-trigger {
+    position: fixed;
+    left: 25px;
+    bottom: 90px;
+    z-index: 998;
+    height: 42px;
+    padding: 0 14px;
+    border: 1px solid #292929;
+    background: rgba(5, 5, 5, 0.85);
+    backdrop-filter: blur(10px);
+    color: #888;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    transition:
+        border-color 0.25s ease,
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.palette-trigger span {
+    color: #a30e25;
+    font-size: 12px;
+}
+
+.palette-trigger kbd {
+    padding: 3px 6px;
+    border: 1px solid #333;
+    background: #111;
+    color: #666;
+    font-family: monospace;
+    font-size: 8px;
+}
+
+.palette-trigger:hover {
+    border-color: #a30e25;
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.palette-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 14vh;
+    background: rgba(2, 2, 2, 0.75);
+    backdrop-filter: blur(6px);
+    animation: paletteFadeIn 0.18s ease;
+}
+
+.palette-box {
+    width: min(560px, 90vw);
+    max-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #a30e25;
+    background: #060606;
+    box-shadow:
+        0 30px 90px rgba(0, 0, 0, 0.7),
+        0 0 0 1px rgba(163, 14, 37, 0.15),
+        0 0 40px rgba(163, 14, 37, 0.12);
+    animation: paletteSlideIn 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.palette-input-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 20px;
+    border-bottom: 1px solid #222;
+}
+
+.palette-input-row > span {
+    color: #a30e25;
+    font-family: monospace;
+    font-size: 16px;
+}
+
+.palette-input-row input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #fff;
+    font-size: 13px;
+    letter-spacing: 0.3px;
+}
+
+.palette-input-row input::placeholder {
+    color: #444;
+}
+
+.palette-close {
+    padding: 6px 9px;
+    border: 1px solid #333;
+    background: transparent;
+    color: #555;
+    cursor: pointer;
+    font-size: 8px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.palette-close:hover {
+    border-color: #a30e25;
+    color: #fff;
+}
+
+.palette-results {
+    overflow-y: auto;
+    padding: 8px;
+}
+
+.palette-result {
+    width: 100%;
+    padding: 12px 14px;
+    border: none;
+    background: transparent;
+    color: #999;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+}
+
+.palette-result-type {
+    flex-shrink: 0;
+    width: 26px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #292929;
+    color: #555;
+    font-size: 7px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.palette-result-label {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #ccc;
+}
+
+.palette-result-hint {
+    flex-shrink: 0;
+    color: #444;
+    font-size: 8px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.palette-result.active {
+    background: rgba(163, 14, 37, 0.1);
+}
+
+.palette-result.active .palette-result-type {
+    border-color: #a30e25;
+    color: #a30e25;
+}
+
+.palette-result.active .palette-result-label {
+    color: #fff;
+}
+
+.palette-empty {
+    padding: 30px 20px;
+    text-align: center;
+    color: #444;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+}
+
+.palette-footer {
+    display: flex;
+    gap: 18px;
+    padding: 12px 20px;
+    border-top: 1px solid #1c1c1c;
+    background: #030303;
+    color: #3d3d3d;
+    font-size: 8px;
+    letter-spacing: 1px;
+}
+
+@keyframes paletteFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes paletteSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-14px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@media (max-width: 700px) {
+    .palette-trigger {
+        right: 15px;
+        bottom: 145px;
+        padding: 0 12px;
+    }
+
+    .palette-trigger kbd {
+        display: none;
+    }
+
+    .palette-overlay {
+        padding-top: 8vh;
+    }
+}

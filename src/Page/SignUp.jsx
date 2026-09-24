@@ -19,6 +19,7 @@ const SignUp = () => {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   const { login } = usePass();
 
@@ -38,6 +39,7 @@ const SignUp = () => {
     setCurrentPage(page);
 
     setError("");
+    setSuccessMessage("");
 
     setFormData({
       fullName: "",
@@ -50,6 +52,7 @@ const SignUp = () => {
     e.preventDefault();
 
     setError("");
+    setSuccessMessage("");
     setLoading(true);
 
     try {
@@ -87,13 +90,13 @@ const SignUp = () => {
 
       const endpoint =
         currentPage === "signup" ? `${API_URL}/signup` : `${API_URL}/login`;
-
-      const response = await fetch(`${API_URL}/login`, {
+        
+      const response = await fetch(endpoint, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(requestData),
       });
 
       const data = await response.json();
@@ -102,7 +105,18 @@ const SignUp = () => {
         throw new Error(data.message || "Something went wrong.");
       }
 
-      if (currentPage === "login" && data.user) {
+      if (currentPage === "signup") {
+        setCurrentPage("login");
+        setFormData((previous) => ({
+          ...previous,
+          fullName: "",
+          password: "",
+        }));
+        setSuccessMessage("Account created. Please sign in below.");
+        return;
+      }
+
+      if (data.user) {
         localStorage.setItem("user", JSON.stringify(data.user));
       }
 
@@ -112,9 +126,7 @@ const SignUp = () => {
 
       const origin = location.state?.from?.pathname || "/Home";
 
-      navigate(origin, {
-        replace: true,
-      });
+      navigate(origin, { replace: true });
     } catch (error) {
       console.error("Authentication error:", error);
 
@@ -383,6 +395,10 @@ const SignUp = () => {
                     autoComplete="current-password"
                   />
                 </div>
+
+                {successMessage && (
+                  <div className="signupSuccess">{successMessage}</div>
+                )}
 
                 {error && <div className="signupError">{error}</div>}
 
