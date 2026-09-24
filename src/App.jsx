@@ -1,12 +1,5 @@
 import "./App.css";
-import {
-  HashRouter,
-  Routes,
-  Route,
-  Navigate,
-  useLocation
-} from "react-router-dom";
-
+import { HashRouter, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import Home from "./Page/Home";
 import Shop from "./Page/Shop";
 import SignUp from "./Page/SignUp";
@@ -23,6 +16,7 @@ import OrderStatus from "./Components/OrderStatus";
 import ProtectedRoute from "./protection/ProtectedRoutes";
 import { PasswordProvider } from "./protection/ProtectedPass";
 import CommandPalette from "./Components/CommandPalette";
+import SystemAnalyzer from "./Page/SystemAnalyzer";
 
 function AppContent() {
   const location = useLocation();
@@ -42,6 +36,7 @@ function AppContent() {
           <Route path="/Home" element={<Home />} />
           <Route path="/Shop" element={<Shop />} />
           <Route path="/about" element={<About />} />
+          <Route path="/SystemAnalyzer" element={<SystemAnalyzer />} />
           <Route path="/security" element={<Security />} />
           <Route path="/build" element={<Build />} />
           <Route path="/support" element={<Support />} />

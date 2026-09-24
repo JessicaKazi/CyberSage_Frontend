@@ -27,6 +27,7 @@ function Navbar() {
     ["SECURITY", "/security"],
     ["INTEL", "/about"],
     ["SUPPORT", "/support"],
+    ["ANALYZE", "/systemanalyzer"]
   ];
 
   const closeMenu = () => {

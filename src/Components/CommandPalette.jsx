@@ -13,6 +13,7 @@ const STATIC_COMMANDS = [
   { label: "ABOUT // INTEL", path: "/about", hint: "GO" },
   { label: "SUPPORT // TERMINAL", path: "/support", hint: "GO" },
   { label: "STATUS // SYSTEM MONITOR", path: "/status", hint: "GO" },
+  { label: "ANALYZE // SYSTEM DETECTOR", path: "/systemanalyzer", hint: "GO" },
 ];
 
 function CommandPalette() {
