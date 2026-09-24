@@ -42,6 +42,7 @@ function AppContent() {
           <Route path="/support" element={<Support />} />
           <Route path="/status" element={<Status />} />
           <Route path="/admin/orders" element={<AdminOrders />} />
+          <Route path="/OrderStatus" element={<OrderStatus />} />
         </Route>
 
         <Route path="/product/:id" element={<ProductInfo />} />
