@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
 import "./Support.css";
@@ -7,23 +8,33 @@ const commands = {
   PRODUCT: {
     title: "PRODUCT SUPPORT",
     text: "Need help choosing or troubleshooting hardware? Start with your product identification.",
+    path: "/Shop",
   },
+
   ORDER: {
     title: "ORDER STATUS",
     text: "Enter your order information to check your current CyberSage order status.",
+    path: "/OrderStatus",
   },
+
   WARRANTY: {
     title: "WARRANTY",
     text: "CyberSage verified hardware is supported according to the warranty attached to your purchase.",
+    path: "/About",
   },
+
   COMPATIBILITY: {
     title: "COMPATIBILITY",
     text: "Use the Build system to analyse component combinations before purchasing.",
+    path: "/Build",
   },
 };
 
 function Support() {
   const [active, setActive] = useState("PRODUCT");
+  const navigate = useNavigate();
+
+  const activeCommand = commands[active];
 
   return (
     <>
@@ -50,13 +61,15 @@ function Support() {
                 className={active === command ? "active" : ""}
                 onClick={() => setActive(command)}
               >
-                <span>[{String(index + 1).padStart(2, "0")}]</span>
+                <span>
+                  [{String(index + 1).padStart(2, "0")}]
+                </span>
 
                 {commands[command].title}
               </button>
             ))}
 
-            <button>
+            <button onClick={() => navigate("/Contact")}>
               <span>[05]</span>
               CONTACT OPERATOR
             </button>
@@ -68,18 +81,26 @@ function Support() {
               <span>SESSION ACTIVE</span>
             </div>
 
-            <p className="command-line">$ open {active.toLowerCase()}</p>
+            <p className="command-line">
+              $ open {active.toLowerCase()}
+            </p>
 
-            <h2>{commands[active].title}</h2>
+            <h2>{activeCommand.title}</h2>
 
-            <p>{commands[active].text}</p>
+            <p>{activeCommand.text}</p>
 
-            <button className="support-action">INITIALISE →</button>
+            <button
+              className="support-action"
+              onClick={() => navigate(activeCommand.path)}
+            >
+              INITIALISE →
+            </button>
           </div>
         </section>
 
         <section className="support-secret">
           <span>TERMINAL MESSAGE</span>
+
           <h2>
             HAVE YOU
             <br />
