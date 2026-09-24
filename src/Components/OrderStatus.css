@@ -1,5 +1,7 @@
 .order-page {
   min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
   background: #050505;
   color: #fff;
 }
@@ -8,6 +10,7 @@
   width: min(1200px, 90%);
   margin: 0 auto;
   padding: 140px 0 100px;
+  box-sizing: border-box;
 }
 
 .order-header {
@@ -15,7 +18,7 @@
   align-items: flex-end;
   justify-content: space-between;
   gap: 30px;
-  margin-bottom: 60px;
+  margin-bottom: 55px;
 }
 
 .order-label,
@@ -30,9 +33,9 @@
 
 .order-header h1 {
   margin: 12px 0;
-  font-size: clamp(45px, 7vw, 85px);
+  font-size: clamp(42px, 7vw, 80px);
   line-height: 0.9;
-  letter-spacing: -5px;
+  letter-spacing: -4px;
   font-weight: 900;
 }
 
@@ -42,12 +45,14 @@
 
 .order-header p {
   max-width: 520px;
+  margin: 0;
   color: #777;
   font-size: 13px;
   line-height: 1.7;
 }
 
 .refresh-btn {
+  flex-shrink: 0;
   padding: 14px 22px;
   border: 1px solid #333;
   background: transparent;
@@ -56,13 +61,11 @@
   font-size: 9px;
   letter-spacing: 1px;
   cursor: pointer;
-  transition: 0.3s ease;
 }
 
 .refresh-btn:hover {
   border-color: #a30e25;
   color: #fff;
-  box-shadow: 0 0 20px rgba(163, 14, 37, 0.15);
 }
 
 .order-error {
@@ -76,6 +79,7 @@
   color: #aaa;
   font-family: monospace;
   font-size: 11px;
+  box-sizing: border-box;
 }
 
 .order-error span {
@@ -84,24 +88,28 @@
 }
 
 .orders-list {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 30px;
+  width: 100%;
 }
 
 .order-card {
   position: relative;
+  width: 100%;
   overflow: hidden;
   border: 1px solid #222;
   background: #090909;
+  box-sizing: border-box;
 }
 
 .order-card::before {
   content: "";
   position: absolute;
   top: 0;
+  bottom: 0;
   left: 0;
   width: 3px;
-  height: 100%;
   background: #a30e25;
 }
 
@@ -112,19 +120,22 @@
   gap: 20px;
   padding: 28px 30px;
   border-bottom: 1px solid #1d1d1d;
+  box-sizing: border-box;
 }
 
 .order-card-top h2 {
   margin: 7px 0 0;
   font-family: monospace;
-  font-size: 20px;
+  font-size: 18px;
   letter-spacing: 1px;
+  word-break: break-all;
 }
 
 .order-status {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-shrink: 0;
   padding: 9px 13px;
   border: 1px solid #333;
   font-family: monospace;
@@ -136,6 +147,7 @@
 .order-status i {
   width: 6px;
   height: 6px;
+  flex-shrink: 0;
   border-radius: 50%;
   background: #777;
 }
@@ -149,32 +161,29 @@
   border-color: #555;
 }
 
-.order-status.shipped {
-  color: #fff;
-  border-color: #a30e25;
-}
-
+.order-status.shipped,
 .order-status.delivered {
   color: #fff;
   border-color: #a30e25;
-  background: rgba(163, 14, 37, 0.1);
 }
 
-.order-status.delivered i,
-.order-status.shipped i {
+.order-status.shipped i,
+.order-status.delivered i {
   background: #a30e25;
   box-shadow: 0 0 10px #a30e25;
 }
 
 .order-meta {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   border-bottom: 1px solid #1d1d1d;
 }
 
 .order-meta > div {
+  min-width: 0;
   padding: 22px 25px;
   border-right: 1px solid #1d1d1d;
+  box-sizing: border-box;
 }
 
 .order-meta > div:last-child {
@@ -191,8 +200,13 @@
 }
 
 .order-meta strong {
+  display: block;
+  overflow: hidden;
+  color: #ddd;
   font-size: 13px;
   font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .order-meta strong.paid {
@@ -201,16 +215,19 @@
 
 .tracking {
   position: relative;
-  padding: 50px 45px 35px;
+  width: 100%;
+  padding: 45px 60px 38px;
+  box-sizing: border-box;
 }
 
 .tracking-line {
   position: absolute;
-  top: 70px;
-  left: 90px;
-  right: 90px;
+  top: 65px;
+  left: 100px;
+  right: 100px;
   height: 1px;
   background: #292929;
+  z-index: 0;
 }
 
 .tracking-progress {
@@ -222,19 +239,23 @@
 
 .tracking-steps {
   position: relative;
-  display: flex;
-  justify-content: space-between;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: 100%;
 }
 
 .tracking-step {
   display: flex;
-  flex-direction: column;
+  min-width: 0;
   align-items: center;
+  flex-direction: column;
   gap: 12px;
   color: #444;
   font-family: monospace;
   font-size: 8px;
   letter-spacing: 1px;
+  text-align: center;
   text-transform: uppercase;
 }
 
@@ -244,11 +265,13 @@
   justify-content: center;
   width: 40px;
   height: 40px;
+  flex-shrink: 0;
   border: 1px solid #292929;
+  border-radius: 50%;
   background: #090909;
   color: #444;
   font-size: 9px;
-  z-index: 2;
+  box-sizing: border-box;
 }
 
 .tracking-step.completed {
@@ -272,22 +295,28 @@
 }
 
 .order-products {
+  width: 100%;
   border-top: 1px solid #1d1d1d;
 }
 
 .products-heading {
   display: flex;
+  align-items: center;
   justify-content: space-between;
+  gap: 20px;
   padding: 18px 30px;
   border-bottom: 1px solid #1d1d1d;
+  box-sizing: border-box;
 }
 
 .order-product {
-  display: flex;
+  display: grid;
+  grid-template-columns: 35px minmax(0, 1fr) 100px;
   align-items: center;
   gap: 18px;
   padding: 18px 30px;
   border-bottom: 1px solid #151515;
+  box-sizing: border-box;
 }
 
 .order-product:last-child {
@@ -301,19 +330,24 @@
 }
 
 .product-info {
+  min-width: 0;
   display: flex;
-  flex: 1;
   align-items: center;
   justify-content: space-between;
   gap: 20px;
 }
 
 .product-info strong {
+  overflow: hidden;
+  color: #ddd;
   font-size: 12px;
   font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .product-info span {
+  flex-shrink: 0;
   color: #555;
   font-family: monospace;
   font-size: 8px;
@@ -321,10 +355,10 @@
 }
 
 .order-product > strong {
-  min-width: 90px;
   text-align: right;
   font-family: monospace;
   font-size: 11px;
+  white-space: nowrap;
 }
 
 .order-footer {
@@ -334,6 +368,7 @@
   padding: 16px 30px;
   border-top: 1px solid #1d1d1d;
   background: #070707;
+  box-sizing: border-box;
 }
 
 .cancelled-box {
@@ -344,6 +379,7 @@
   padding: 25px;
   border: 1px solid #40141c;
   background: rgba(109, 17, 30, 0.08);
+  box-sizing: border-box;
 }
 
 .cancelled-icon {
@@ -352,6 +388,7 @@
   justify-content: center;
   width: 40px;
   height: 40px;
+  flex-shrink: 0;
   border: 1px solid #6d111e;
   color: #a30e25;
   font-size: 22px;
@@ -375,6 +412,7 @@
   border: 1px solid #222;
   text-align: center;
   background: #090909;
+  box-sizing: border-box;
 }
 
 .empty-icon {
@@ -413,7 +451,6 @@
   font-size: 9px;
   letter-spacing: 1px;
   cursor: pointer;
-  transition: 0.3s ease;
 }
 
 .empty-orders button:hover {
@@ -423,9 +460,9 @@
 .order-loading {
   min-height: 500px;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   gap: 20px;
 }
 
@@ -451,7 +488,7 @@
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 800px) {
   .order-main {
     width: calc(100% - 30px);
     padding: 115px 0 70px;
@@ -461,10 +498,6 @@
     align-items: flex-start;
     flex-direction: column;
     margin-bottom: 40px;
-  }
-
-  .order-header h1 {
-    letter-spacing: -3px;
   }
 
   .refresh-btn {
@@ -478,11 +511,10 @@
   }
 
   .order-meta {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .order-meta > div {
-    padding: 17px;
     border-bottom: 1px solid #1d1d1d;
   }
 
@@ -491,20 +523,26 @@
   }
 
   .tracking {
-    padding: 40px 15px 30px;
-    overflow-x: auto;
+    padding: 40px 25px 35px;
   }
 
   .tracking-line {
-    left: 55px;
-    right: 55px;
+    left: 65px;
+    right: 65px;
+    top: 60px;
   }
 
-  .tracking-steps {
-    min-width: 450px;
+  .tracking-step {
+    font-size: 7px;
+  }
+
+  .step-dot {
+    width: 36px;
+    height: 36px;
   }
 
   .order-product {
+    grid-template-columns: 30px minmax(0, 1fr) 75px;
     padding: 16px 20px;
   }
 
@@ -515,7 +553,61 @@
   }
 
   .order-footer {
+    align-items: flex-start;
     flex-direction: column;
     padding: 15px 20px;
+  }
+}
+
+@media (max-width: 500px) {
+  .order-header h1 {
+    font-size: 43px;
+    letter-spacing: -3px;
+  }
+
+  .order-meta {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .order-meta > div {
+    padding: 15px;
+  }
+
+  .order-meta strong {
+    font-size: 11px;
+  }
+
+  .tracking {
+    padding: 35px 10px 30px;
+    overflow-x: auto;
+  }
+
+  .tracking-steps {
+    min-width: 430px;
+  }
+
+  .tracking-line {
+    left: 50px;
+    right: 50px;
+  }
+
+  .order-product {
+    grid-template-columns: 25px minmax(0, 1fr) 65px;
+    gap: 10px;
+    padding: 15px;
+  }
+
+  .product-info strong {
+    white-space: normal;
+    line-height: 1.4;
+  }
+
+  .products-heading {
+    padding: 16px;
+  }
+
+  .cancelled-box {
+    margin: 20px;
+    padding: 18px;
   }
 }
