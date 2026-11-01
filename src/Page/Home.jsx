@@ -172,7 +172,7 @@ function Home() {
                 </div>
 
                 <video
-                  src="/assets/parts/ASUS_A15.mp4"
+                  src="/assets/parts/Ab4t8t6.gif"
                   autoPlay
                   loop
                   muted
